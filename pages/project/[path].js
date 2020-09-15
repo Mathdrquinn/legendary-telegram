@@ -1,17 +1,17 @@
-import fetch from 'isomorphic-unfetch';
+import fetch from "isomorphic-unfetch";
 import {
   StarIcon,
   WatchIcon,
   BugIcon,
   AzureIcon,
   GithubIcon,
-  projectIcons
-} from '../../components/Icons';
-import { projects } from '../../utils/projectsData';
+  projectIcons,
+} from "../../components/Icons";
+import { projects } from "../../utils/projectsData";
 
 function Project({ project, path }) {
-  const projectData = projects.find(project => project.slug === path);
-  const Icon = projectIcons[projectData.id]
+  const projectData = projects.find((project) => project.slug === path);
+  const Icon = projectIcons[projectData.id];
   console.log(path);
   return (
     <div className="project">
@@ -75,10 +75,11 @@ function Project({ project, path }) {
 }
 
 Project.getInitialProps = async function (context) {
+  console.log("where is this happening?");
   const { path } = context.query;
-  const projectData = projects.find(project => project.slug === path);
+  const projectData = projects.find((project) => project.slug === path);
   const ghPath = projectData.path;
-  
+
   const res = await fetch(`https://api.github.com/repos/${ghPath}`);
   const project = await res.json();
   return { project, path };
